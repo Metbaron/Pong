@@ -32,8 +32,8 @@ ball.shape("square")  # built in shapes
 ball.color("white")
 ball.penup()  # something with lines
 ball.goto(0, 0)  # Navigator
-ball.dx = 1  # x-axis movement of ball, new attribute
-ball.dy = 1  # y-axis movement of ball
+ball.dx = 0.75  # x-axis movement of ball, new attribute
+ball.dy = 0.75  # y-axis movement of ball
 
 # Game functions
 
@@ -88,6 +88,29 @@ while True:
         ball.sety(290)  # reset position
         ball.dy *= -1  # reverse direction
 
-    if ball.ycor() > 290:
-        ball.sety(290)
+    if ball.ycor() < -290:
+        ball.sety(-290)
         ball.dy *= -1
+
+    #  Todo make it so that ball starts from pedal
+    if ball.xcor() > 390 :
+        ball.goto(0, 0)  # reset ball
+        ball.dx *= -1  # reverse direction
+
+    if ball.xcor() < -390 :
+        ball.goto(0, 0)
+        ball.dx *= -1
+
+    # Paddle ball collision
+    # Collision when ball hits certain x coord and y coord of paddle
+    if (ball.xcor() > 340 and ball.xcor() < 350) and \
+            (ball.ycor() < paddle_b.ycor() + 40 and ball.ycor() > paddle_b.ycor() - 40):
+        ball.setx(340)  # set ball to correct position
+        ball.dx *= -1
+
+    if (ball.xcor() < -340 and ball.xcor() > -350) and \
+            (ball.ycor() < paddle_a.ycor() + 40 and ball.ycor() > paddle_a.ycor() - 40):
+        ball.setx(-340)  # set ball to correct position
+        ball.dx *= -1
+
+    #  Todo fixed update speed
