@@ -1,4 +1,6 @@
 import turtle
+import os
+
 
 wn = turtle.Screen()  # create window
 wn.title("Pong")
@@ -50,6 +52,7 @@ pen.write("Player A: 0  Player B: 0", align="center", font=("Courier", 24, "norm
 
 # Game functions
 
+
 def paddle_a_up():
     # consider taking paddle as input
     # get y coordinate and change it to new value
@@ -99,27 +102,28 @@ while True:
     if ball.ycor() > 290:  # account for ball size
         ball.sety(290)  # reset position
         ball.dy *= -1  # reverse direction
+        os.system("aplay bounce.wav&")  # & stops delay after playing sound
 
     if ball.ycor() < -290:
         ball.sety(-290)
         ball.dy *= -1
+        os.system("aplay bounce.wav&")
 
     #  Todo make it so that ball starts from pedal
     #  Todo create scoring function to update on hit
-    if ball.xcor() > 390 :
+    if ball.xcor() > 390:
         ball.goto(0, 0)  # reset ball
         ball.dx *= -1  # reverse direction
         score_a += 1  # score keeping
-        pen.clear()  #delete previous score
-        pen.write("Player A: {}  Player B: {}".format(score_a,score_b), align="center", font=("Courier", 24, "normal"))
+        pen.clear()  # delete previous score
+        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
 
-    if ball.xcor() < -390 :
+    if ball.xcor() < -390:
         ball.goto(0, 0)
         ball.dx *= -1
         score_b += 1
         pen.clear()
-        pen.write("Player A: {}  Player B: {}".format(score_a,score_b), align="center", font=("Courier", 24, "normal"))
-
+        pen.write("Player A: {}  Player B: {}".format(score_a, score_b), align="center", font=("Courier", 24, "normal"))
 
     # Paddle ball collision
     # Collision when ball hits certain x coord and y coord of paddle
@@ -127,10 +131,13 @@ while True:
             (ball.ycor() < paddle_b.ycor() + 40 and ball.ycor() > paddle_b.ycor() - 40):
         ball.setx(340)  # set ball to correct position
         ball.dx *= -1
+        os.system("aplay bounce.wav&")
 
     if (ball.xcor() < -340 and ball.xcor() > -350) and \
             (ball.ycor() < paddle_a.ycor() + 40 and ball.ycor() > paddle_a.ycor() - 40):
         ball.setx(-340)  # set ball to correct position
         ball.dx *= -1
+        os.system("aplay bounce.wav&")
+
 
     #  Todo fixed update speed
